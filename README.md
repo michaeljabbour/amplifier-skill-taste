@@ -1,0 +1,81 @@
+# Taste × Elegance
+
+A lightweight skill that guides users and agents toward taste and elegance through the user's distinct experience and reasoning. Use it to explore writing, design, products, technical solutions, and agent-generated options, then choose a worthwhile refinement or reframe without overengineering. It does not give people taste or elegance, and an AI does not become the authority on either.
+
+**Taste** is context-sensitive fit for an audience, purpose, and constraints. **Elegance** is a clear, economical resolution that accounts for users, maintainers, operators, and future work. Neither means luxury or minimalism. Evaluate artifacts and decisions, never a person's identity or inherent ability.
+
+This project pairs the reusable [`improve-taste-and-elegance` skill](SKILL.md) with an explanatory static website. The skill and [calibration reference](references/calibration.md) match the canonical revised source supplied for the existing [user-created skill](https://chatgpt.com/skills?skill_id=6ad24a616a5c8191932249aac4254289), including the user's clarification about facilitation, agency, and the choice between refinement and reframing. This project does not itself modify the installed skill.
+
+## Use the skill
+
+Give an agent the skill and a concrete artifact or set of options. Include the audience, purpose, constraints, and what success would look like. Share what shaped your choices: an experience, an admired or disliked example and why, a tension, what feels wrong, or a distinct intent that must survive changes. The agent should reflect your reasoning for correction and derive provisional criteria with you. This is a compact conversation, not a large questionnaire; at most three missing-context questions are appropriate, only where answers would change the recommendation.
+
+If your tool supports reusable skills, place `SKILL.md` and `references/calibration.md` together in an `improve-taste-and-elegance` skill directory according to that tool's instructions. Keep the relative `references/` path intact.
+
+Example requests:
+
+> Use improve-taste-and-elegance to explore this outage notice. My experience supporting anxious customers makes a direct next action important; I dislike notices that sound calm while hiding the impact. Reflect that intent, then propose one small improvement and how we could verify it. Keep this a critique.
+
+> Help me explore these two onboarding flows against the same brief. Ask what shaped my judgment and reflect the important tension back to me. Check correctness, safety, accessibility, and feasibility before adoption. If a map helps, invite my self-placement, then offer a provisional view with evidence, confidence, and unknowns.
+
+> Help me choose between delicately refining this authorized draft and making a meaningful conceptual jump. Preserve its warmth and specificity. In at most two rounds, preserve the baseline, predict benefit and regression risk, verify, and keep or undo the change. Stop when it meets the brief.
+
+A useful response reflects your intent and provisional criteria, states assumptions and gates, offers independent coordinates with evidence and confidence when helpful, and proposes one next experiment with a tradeoff and stopping condition. You retain agency over the direction and preferences. See [a concrete proposal-only example](docs/EXAMPLES.md).
+
+## How judgment works
+
+Correctness, safety, accessibility, and feasibility are gates. Mark each **pass**, **fail**, **unknown**, or **not applicable**, with a reason. A failed critical gate blocks recommendation. An unknown critical gate is verification work, never an implicit pass. Repair the gate before polishing.
+
+The map is a conversation aid, not an objective measurement, credential, or AI scoring authority. Prefer the user's self-placement and reasons, and use qualitative language by default. The [independent 1–5 anchors](references/calibration.md) are optional when numbers help. Do not average the axes, add a combined score, use decimals, or imply universal rankings. Use a range or “unknown” when evidence is weak; name confidence and missing evidence for each axis. You can challenge the reading and revise the shared criteria.
+
+The site's four quadrants are shorthand: right solution, beautifully resolved; right idea, awkward execution; polished answer, wrong problem; and rethink direction and execution. The selectable examples and before/after coordinates are **illustrative hypotheses, not measured data or completed assessments**. A real assessment needs a shared brief, gate checks, and evidence. Quadrants are not rigid scoring cutoffs.
+
+## Improve without overengineering
+
+Draw on the user's reasoning before asking for more context. Keep distinctive intent and contextual tensions visible instead of steering everyone toward the same aesthetic. Distinguish empirical checks—whether a task works or a requirement is met—from preferences grounded in the user's experiences and reasons.
+
+Choose the bottleneck, then deliberately choose either a small hill climb or one meaningful conceptual jump, reframe, or structural alternative. A valuable reframe can be chosen before refinement stalls; a large redesign is not the default. Explain what must survive the change, predict its observable benefit and regression risk, preserve a baseline and rollback path, then verify before keeping it. Default to at most two rounds, including proposed but unverified rounds. Stop at worthwhile success or when the remaining gain does not justify its cost.
+
+A critique authorizes recommendations. Edit only artifacts and scope the user authorized; it does not authorize external messages, publishing, or deployment. Never invent test results or user research. Coaching should use concrete decisions and offer one practicable growth action.
+
+## Local development
+
+The site follows the reference project's small Python static-builder approach: HTML, CSS, and JavaScript with no backend or runtime dependencies. Use Python 3.11 or later; no package installation is required.
+
+From the project directory:
+
+```sh
+python3 scripts/build.py
+python3 scripts/check.py
+node --check site/site.js   # optional JavaScript syntax check; needs Node.js
+python3 -m http.server 8000 --bind 127.0.0.1 --directory _site
+```
+
+Open <http://127.0.0.1:8000> in your browser. Stop the server with `Ctrl+C`. Re-run the build after source changes and reload the page. `_site/` is generated output. The website's copy and download actions serve this project's skill; preserve the calibration reference when installing it.
+
+Preview over HTTP: the example selector reads a local JSON file. If clipboard access is unavailable, copy actions select the source and explain how to copy it manually. The skill bundle is a reproducible ZIP containing the project skill and calibration reference. The integrity check verifies local links and fragments, source fidelity, and ZIP contents. See [site details](site/README.md) and [validation evidence](docs/VALIDATION.md) for the implementation and browser checks.
+
+The source is in the private [amplifier-skill-taste repository](https://github.com/michaeljabbour/amplifier-skill-taste). The output can be served by a static host using the same build command and `_site` as the publish directory. The website has not been deployed; repository upload does not publish the site.
+
+## Project contents
+
+- `SKILL.md` — canonical revised instructions for facilitation, agency, jumps, and refinements.
+- `references/calibration.md` — eight invitations, two ways forward, optional independent anchors, and examples.
+- `docs/EXAMPLES.md` — a worked, explicitly proposal-only assessment.
+- `scripts/build.py` — dependency-free static build entry point.
+- `scripts/check.py` — local link, source, and download integrity checks.
+- `site/` — page template, metadata, styles, local assets, and interaction code.
+- `_site/` — generated website and downloadable skill assets.
+
+## Limits
+
+This is a structured aid to developing and expressing judgment, not a validated psychometric instrument, objective quality metric, or substitute for domain expertise. Anchors depend on the brief, the user's intent, and available evidence; two careful reviewers may disagree. They cannot establish a person's talent or general competence. An agent can help articulate reasons and test consequences, but cannot confer taste or settle a preference by assigning a number.
+
+The graph cannot assess an uploaded artifact, certify correctness or accessibility, or demonstrate causal improvement. Its examples are invented for explanation. Actual tests, inspection, and user research must be identified separately; unknowns remain unknown until verified. Essential complexity sometimes cannot be removed. A good outcome may stay below 5 on either axis because the user's priorities and costs govern.
+
+## License and provenance
+
+MIT; see [LICENSE](LICENSE). The preserved family-theme snapshot has its own
+[MIT notice](site/theme/LICENSE). The page follows Decisioncraft's local static site
+as a design and implementation reference. Its product text, media, repository
+configuration, and institutional attribution are not part of this project.
