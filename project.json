@@ -4,16 +4,17 @@
   "version": "0.1.0",
   "description": "A guide for users and agents to develop judgment through distinct experience, conceptual jumps, and bounded refinements, with a static explanatory site.",
   "license": "MIT",
-  "private": true,
+  "private": false,
   "runtime": "Python >=3.11 (build only); browser (static site)",
   "dependencies": [],
   "skill": "SKILL.md",
   "build": "python3 scripts/build.py",
   "check": "python3 scripts/check.py",
   "output": "_site",
-  "publication": "Private source repository. No website deployment configured or performed.",
+  "publication": "Public source repository. Static site publishes to GitHub Pages from main.",
   "repository": {
     "type": "git",
     "url": "https://github.com/michaeljabbour/amplifier-skill-taste.git"
-  }
+  },
+  "homepage": "https://michaeljabbour.github.io/amplifier-skill-taste/"
 }

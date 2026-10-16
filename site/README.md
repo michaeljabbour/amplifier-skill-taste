@@ -4,7 +4,9 @@ This page follows the reference project's static Python build, Amplifier family
 visual language, two-column hero, local assets, fine rules, and restrained navigation.
 The generated `_site/` directory is compatible with static hosting, including a
 repository subpath on GitHub Pages. All product links are relative or page anchors.
-No publication workflow or remote is configured.
+The public repository uses `.github/workflows/pages.yml` to build, check, and
+publish `_site/` from `main` with GitHub Pages. The repository About website and
+the first README link point to the site.
 
 ## Build and preview
 
@@ -53,3 +55,15 @@ repository metadata, or institutional attribution.
   gate status, evidence, confidence, and missing evidence. The user retains agency.
 - No automatic movement. State changes follow explicit native controls. Reduced
   motion disables smooth scrolling. A text example remains without JavaScript.
+
+## Deployment
+
+The Pages source is GitHub Actions. The workflow separates build and deployment
+jobs, checks the output before upload, and uploads only `_site/`. Deployment gets
+`pages: write` and `id-token: write`; the build has read access only. No project
+secrets or backend services are needed. Official GitHub action revisions are
+pinned to fixed commits. Future pushes to `main` rebuild and redeploy the site;
+manual runs are also available from Actions.
+
+The live URL is <https://michaeljabbour.github.io/amplifier-skill-taste/>. Keep
+asset, navigation, and download paths relative so repository-subpath hosting works.

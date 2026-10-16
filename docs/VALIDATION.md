@@ -1,7 +1,8 @@
 # Local validation
 
 Validation date: 2026-10-16. The preview used the user's local Microsoft Edge
-browser, not a separately launched headless browser. No site deployment occurred.
+browser, not a separately launched headless browser. This section records the
+initial local checks before the later authorized public release.
 
 ## Build and file integrity
 
@@ -69,4 +70,6 @@ was detected. Generated output, terminal logs, download test copies, and local
 configuration are excluded from Git. Only the family CSS and its MIT notice were
 copied from the reference. A single initial commit uses a generic project
 contributor identity with a non-personal noreply address. No prior commit history
-is imported. The repository is private; no website deployment is configured.
+is imported. The initial repository upload was private. The later public release
+was explicitly authorized, and adds the Pages workflow and publication
+documentation to the same reviewed source.

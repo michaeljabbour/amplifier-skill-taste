@@ -1,5 +1,7 @@
 # Taste × Elegance
 
+[Open the interactive guide and get the skill](https://michaeljabbour.github.io/amplifier-skill-taste/).
+
 A lightweight skill that guides users and agents toward taste and elegance through the user's distinct experience and reasoning. Use it to explore writing, design, products, technical solutions, and agent-generated options, then choose a worthwhile refinement or reframe without overengineering. It does not give people taste or elegance, and an AI does not become the authority on either.
 
 **Taste** is context-sensitive fit for an audience, purpose, and constraints. **Elegance** is a clear, economical resolution that accounts for users, maintainers, operators, and future work. Neither means luxury or minimalism. Evaluate artifacts and decisions, never a person's identity or inherent ability.
@@ -55,7 +57,7 @@ Open <http://127.0.0.1:8000> in your browser. Stop the server with `Ctrl+C`. Re-
 
 Preview over HTTP: the example selector reads a local JSON file. If clipboard access is unavailable, copy actions select the source and explain how to copy it manually. The skill bundle is a reproducible ZIP containing the project skill and calibration reference. The integrity check verifies local links and fragments, source fidelity, and ZIP contents. See [site details](site/README.md) and [validation evidence](docs/VALIDATION.md) for the implementation and browser checks.
 
-The source is in the private [amplifier-skill-taste repository](https://github.com/michaeljabbour/amplifier-skill-taste). The output can be served by a static host using the same build command and `_site` as the publish directory. The website has not been deployed; repository upload does not publish the site.
+The public source is in the [amplifier-skill-taste repository](https://github.com/michaeljabbour/amplifier-skill-taste). The primary entry point is the [live website](https://michaeljabbour.github.io/amplifier-skill-taste/). The Pages workflow builds and checks `_site/` on pushes to `main`, then publishes only that static output. It uses GitHub’s official actions pinned to fixed commits and needs no project secrets. See [site details](site/README.md) for deployment maintenance.
 
 ## Project contents
 
