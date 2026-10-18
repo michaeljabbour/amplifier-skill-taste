@@ -1,5 +1,10 @@
 # Changelog
 
+## Unreleased
+
+- Open the site with a one-minute lesson film: two yard-sale signs teach the two questions before the skill appears. Captions, a poster and a 15-second cut ship beside it, and [docs/FILM.md](docs/FILM.md) explains what it teaches and how it was checked.
+- The integrity check now verifies video poster references.
+
 ## 0.1.0 — 2026-10-16
 
 - Include the canonical revised `improve-taste-and-elegance` skill and calibration reference.

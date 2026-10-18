@@ -35,7 +35,7 @@ class Page(HTMLParser):
             if identifier in self.ids:
                 self.duplicates.append(identifier)
             self.ids.add(identifier)
-        for key in ('href', 'src'):
+        for key in ('href', 'src', 'poster'):
             if key in attrs:
                 self.references.append(attrs[key])
         if 'download' in attrs:

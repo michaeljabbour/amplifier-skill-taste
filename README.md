@@ -57,6 +57,8 @@ Open <http://127.0.0.1:8000> in your browser. Stop the server with `Ctrl+C`. Re-
 
 Preview over HTTP: the example selector reads a local JSON file. If clipboard access is unavailable, copy actions select the source and explain how to copy it manually. The skill bundle is a reproducible ZIP containing the project skill and calibration reference. The integrity check verifies local links and fragments, source fidelity, and ZIP contents. See [site details](site/README.md) and [validation evidence](docs/VALIDATION.md) for the implementation and browser checks.
 
+The site opens with a one-minute lesson film that teaches the two questions with an everyday example; see [how it was made](docs/FILM.md).
+
 The public source is in the [amplifier-skill-taste repository](https://github.com/michaeljabbour/amplifier-skill-taste). The primary entry point is the [live website](https://michaeljabbour.github.io/amplifier-skill-taste/). The Pages workflow builds and checks `_site/` on pushes to `main`, then publishes only that static output. It uses GitHub’s official actions pinned to fixed commits and needs no project secrets. See [site details](site/README.md) for deployment maintenance.
 
 ## Project contents
