@@ -59,19 +59,29 @@ def check(output):
     assert not page.duplicates, f'Duplicate IDs: {page.duplicates}'
     assert page.h1s == 1 and page.lang == 'en', 'Expected one page title and an English document language'
     assert not re.search(r'@@[A-Z_]+@@', raw), 'Unresolved placeholders'
+    pages = {}
+    for path in sorted(output.rglob('*.html')):
+        parsed_page = Page()
+        content = path.read_text(encoding='utf-8')
+        parsed_page.feed(content)
+        assert not parsed_page.duplicates, f'Duplicate IDs in {path.name}: {parsed_page.duplicates}'
+        assert parsed_page.h1s == 1 and parsed_page.lang == 'en', f'Expected one page title and English language: {path.name}'
+        assert not re.search(r'@@[A-Z_]+@@', content), f'Unresolved placeholders: {path.name}'
+        pages[path.resolve()] = parsed_page
     local_count = 0
-    for reference in page.references:
-        parsed = urlsplit(reference)
-        if parsed.scheme or parsed.netloc:
-            assert parsed.scheme == 'https', f'Unexpected external protocol: {reference}'
-            continue
-        assert not parsed.path.startswith('/'), f'Root-relative link would break repository hosting: {reference}'
-        target = (output / unquote(parsed.path)).resolve() if parsed.path else output / 'index.html'
-        assert target.is_relative_to(output.resolve()), f'Link escapes output: {reference}'
-        assert target.exists(), f'Missing link or asset: {reference}'
-        if parsed.fragment:
-            assert target.name == 'index.html' and parsed.fragment in page.ids, f'Missing anchor: {reference}'
-        local_count += 1
+    for path, parsed_page in pages.items():
+        for reference in parsed_page.references:
+            parsed = urlsplit(reference)
+            if parsed.scheme or parsed.netloc:
+                assert parsed.scheme == 'https', f'Unexpected external protocol: {reference}'
+                continue
+            assert not parsed.path.startswith('/'), f'Root-relative link would break repository hosting: {reference}'
+            target = (path.parent / unquote(parsed.path)).resolve() if parsed.path else path
+            assert target.is_relative_to(output.resolve()), f'Link escapes output: {reference}'
+            assert target.exists(), f'Missing link or asset from {path.name}: {reference}'
+            if parsed.fragment:
+                assert target in pages and parsed.fragment in pages[target].ids, f'Missing anchor: {reference}'
+            local_count += 1
     markdown_count = 0
     for document in output.rglob('*.md'):
         for reference in re.findall(r'!?\[[^\]]*\]\(([^)]+)\)', document.read_text(encoding='utf-8')):
@@ -82,6 +92,18 @@ def check(output):
             assert target.is_relative_to(output.resolve()), f'Markdown link escapes output: {document.name}: {reference}'
             assert target.exists(), f'Missing Markdown link: {document.relative_to(output)}: {reference}'
             markdown_count += 1
+    versions = json.loads((ROOT / 'site/site.json').read_text())['code_walkthrough']
+    formatters = []
+    for version in versions:
+        namespace = {}
+        exec(compile(version['code'], '<worked example>', 'exec'), namespace)
+        formatters.append(namespace['update'])
+    for service in ('Payments', 'Account access'):
+        incident = dict(service=service, impact='Some requests fail.', workaround='Use the mobile app.', next_update='14:00 EDT')
+        expected = f'We know this interrupts your day. {service}: Some requests fail.\nTry: Use the mobile app.\nNext update: 14:00 EDT'
+        assert all(formatter(incident) == expected for formatter in formatters[1:]), 'Refinement changed the customer message'
+    assert len(re.findall(r'class="code-card"', raw)) == 4, 'Missing code version'
+    print('PASS: four code versions rendered; baseline and two refinements preserve exact output on both service paths')
     skill = (ROOT / 'SKILL.md').read_text(encoding='utf-8')
     assert page.skill == skill, 'Copy source differs from canonical SKILL.md'
     for name in ('SKILL.md', 'references/calibration.md'):
@@ -101,7 +123,7 @@ def check(output):
         assert not re.search(r'@import|url\(\s*[\'"]?https?:', css), f'External CSS dependency: {name}'
     assert 'default-src \'self\'' in raw and 'object-src \'none\'' in raw
     digest = hashlib.sha256((output / 'improve-taste-and-elegance.zip').read_bytes()).hexdigest()
-    print(f'PASS: {local_count} local links/assets and fragments; no missing targets or duplicate IDs')
+    print(f'PASS: {local_count} local links/assets and fragments across {len(pages)} HTML pages; no missing targets or duplicate IDs')
     print(f'PASS: {markdown_count} local destinations in shipped Markdown documentation')
     print('PASS: source textarea, both Markdown downloads, and ZIP match canonical files byte-for-byte')
     print('PASS: three distinct illustrative examples, local assets, static CSP, repository-subpath-safe links')

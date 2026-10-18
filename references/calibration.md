@@ -21,6 +21,16 @@ Choose one or two that fit the moment. Build on answers instead of marching thro
 
 The same logic applies to technical work: a new data model can be a jump; clarifying one interface can be a hillclimb. Neither is inherently superior.
 
+## Worked comparisons, including code
+
+Use one shared brief and input contract for all versions. Preserve the real original when supplied; label an invented baseline as illustrative. Choose a plausible worse alternative that exposes a real tradeoff, rather than a caricature. A shorter implementation can be easy to read yet omit the audience's essential need. A critical gate failure still blocks adoption regardless of its map position.
+
+For each version, show the artifact, relevant gate status with reasons, and the evidence behind each axis independently. Under a requested visual code comparison, place a matrix beneath each code block using the same scale and labels throughout. Supply a text placement with confidence and unknowns. Use the anchors below for numbers; do not imply measured distances, equal improvement per step, or an inevitable climb toward the upper right.
+
+For example, under a fictional incident-update brief, preserve an author's deliberate acknowledgement of the customer's interruption while clarifying the formatter. A terse status-only alternative misses the brief. The original includes impact, action, and the next-update time but assembles them awkwardly. Round one removes a redundant branch; round two makes the message structure visible. Taste might remain at 4 while elegance is provisionally placed at 2, then 3, then 4. These are discussable judgments, not test results. Exact output checks can establish parity on the cases run; comprehension, maintainability, and resonance require their own evidence.
+
+Record why the acknowledgement stays in a decision note, identify its source as the fictional brief, and name what could reopen that choice. For real work, use the actual user's reasons. End with the evidence obtained, remaining unknowns, a keep-or-revert decision or proposal, and the stopping condition. Do not add rounds merely to populate the map.
+
 ## Optional independent anchors
 
 Use only when a map helps discussion. These are provisional judgments about work under an agreed brief, never identities, universal benchmarks, or a total score. Invite self-placement first. Give evidence, low/medium/high confidence, and important unknowns; use a range or “unknown” when necessary.

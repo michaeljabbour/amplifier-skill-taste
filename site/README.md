@@ -26,6 +26,11 @@ opening the HTML with `file://`.
 
 - `site.json`: metadata and explicitly fictional examples.
 - `template.html`: semantic page content and layout.
+- `evidence.html`: visual work examples and the judgments they help people practice,
+  with benchmark methods and case records in an optional disclosure.
+- `../docs/evaluations/benchmark-2026-10-17/`: frozen results and source evidence.
+  The build derives headline counts from `results.json`, includes the benchmark
+  archive, and marks whether the evaluated snapshot matches the current download.
 - `style.css`: product styles and responsive behavior.
 - `site.js`: native example selection, baseline/proposed views, copy feedback.
 - `assets/`: original SVG favicon and share illustration. Some social platforms

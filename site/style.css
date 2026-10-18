@@ -230,3 +230,85 @@ html { scroll-padding-top: 24px; }
 }
 @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } *, *::before, *::after { transition: none !important; animation: none !important; } }
 @media (max-width: 360px) { .quadrant { padding: 10px 7px; } .quadrant h3 { font-size: 15px; } }
+
+/* Worked code comparison: each listing keeps its own placement and reasoning. */
+.code-brief { padding: 1.6rem; background: var(--surface, #eeeee6); border-left: 3px solid #486b61; margin: 1.8rem 0; }
+.code-cards { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:1.5rem; }
+.code-card { min-width:0; padding:1.5rem; border:1px solid #d5d8cc; border-radius:12px; background:#fcfbf6; }
+.code-card h3 { font-size:1.5rem; }
+.code-card pre { padding:1.2rem; background:#192d29; color:#eef2db; overflow-x:auto; font-size:.83rem; line-height:1.65; border-radius:8px; min-height:24rem; }
+.code-placement { margin:1.4rem 0; display:grid; grid-template-columns:150px 1fr; gap:1rem; align-items:start; }
+.code-placement svg { width:100%; background:#f1f1e8; border-radius:8px; }
+.code-placement text { font:16px system-ui; fill:#344c42; }
+.mini-grid { fill:none; stroke:#c4ccbf; stroke-width:1; }
+.mini-route { fill:none; stroke:#486b61; stroke-width:3; }
+.other-dot { fill:#aab5a8; }.current-dot { fill:#244e42; stroke:#fff; stroke-width:2; }
+.code-gate { border-top:1px solid #d5d8cc; padding-top:1rem; font-size:.9rem; }
+@media(max-width:760px) { .code-cards { grid-template-columns:1fr; } .code-card { padding:1rem; } .code-card pre { min-height:0; } .code-placement { grid-template-columns:120px 1fr; } }
+@media(max-width:380px) { .code-placement { grid-template-columns:1fr; } .code-placement svg { max-width:180px; } }
+
+/* Work examples lead; the full research record is available on demand. */
+.benefit-summary { display:grid; grid-template-columns:1fr 1fr; gap:5rem; align-items:center; }
+.benefit-summary h2 { font-size:clamp(34px,4vw,52px); margin-bottom:1.4rem; }
+.benefit-summary p { max-width:48ch; }
+.benefit-summary .button { margin-top:1.4rem; }
+.benefit-preview { padding:2.5rem; background:#e8eee8; border-radius:2px 42px 2px 2px; }
+.benefit-preview blockquote { font:34px/1.3 var(--serif); margin:1.4rem 0; }
+.preview-label,.proof-label { font:13px/1.4 Arial,sans-serif; color:#4a6157; display:block; }
+.benefit-preview .note { margin-top:1.5rem; font-size:12px; }
+.home-evidence-note { margin-top:2.5rem; border-top:1px solid var(--line); padding-top:1rem; font-size:13px; max-width:90ch; }
+.home-evidence-note summary { min-height:44px; cursor:pointer; }
+.work-evidence { padding-top:65px; }
+.work-hero { display:grid; grid-template-columns:1.15fr 1fr; gap:6rem; align-items:center; padding-bottom:55px; }
+.work-hero h1 { font-size:clamp(48px,6vw,78px); line-height:1.04; margin-bottom:1.8rem; }
+.work-hero p { max-width:42ch; }
+.work-lede { font-size:23px; line-height:1.4; }
+.work-hero .text-link { display:inline-block; margin-top:1rem; }
+.hero-proof { margin:0; background:#e8eee8; padding:2rem 2.5rem; border-radius:2px 55px 2px 2px; position:relative; }
+.hero-proof blockquote { font:clamp(32px,3.6vw,48px)/1.17 var(--serif); margin:1.6rem 0 2rem; }
+.hero-proof figcaption { font-size:15px; line-height:1.6; }
+.proof-stamp { display:inline-block; margin-top:1.8rem; background:#f1e7ad; padding:.45rem .8rem; transform:rotate(-3deg); font:13px/1.4 Arial,sans-serif; }
+.work-context { max-width:82ch; font-size:13px; color:var(--muted); padding-bottom:2rem; }
+.work-story { display:grid; grid-template-columns:.8fr 1.3fr; gap:5rem; padding:65px 0; border-top:1px solid var(--line); }
+.story-kind { color:var(--accent); font-size:14px; margin-bottom:1rem; }
+.story-heading h2 { font-size:clamp(34px,3.8vw,47px); line-height:1.1; margin-bottom:1.5rem; }
+.story-heading > p { max-width:37ch; }
+.capability-note { margin-top:2rem; font-size:14px; color:#4a6157; }
+.writing-sheet { background:#eeece5; padding:1.6rem 1.8rem; }
+.writing-sheet p { font:19px/1.65 var(--serif); margin:.8rem 0 0; }
+.writing-sheet mark { background:#f1e7ad; color:inherit; }
+.writing-sheet.revised { background:#e8eee8; margin-top:1rem; border-left:3px solid #486b61; }
+.story-verdict { font-size:14px; margin:1.5rem 0 1rem; max-width:64ch; }
+.names-work { padding:1rem 0; }
+.names-row { padding:1rem 1.5rem; background:#eeece5; }
+.names-row + .names-row { margin-top:.6rem; }
+.name-strip { display:flex; gap:1.5rem; align-items:center; padding-top:.8rem; font:26px/1.5 var(--serif); }
+.erased { background:#f1e7e0; }.missing-name { font:12px Arial,sans-serif; color:#795345; border:1px dashed #b19182; padding:.6rem; }
+.restored { background:#e8eee8; border-left:3px solid #486b61; }
+.panel-comparison { display:grid; grid-template-columns:1fr 1fr; gap:1rem; }
+.route-panel { margin:0; min-height:290px; padding:1.4rem; background:#eeece5; display:flex; flex-direction:column; }
+.route-panel figcaption { font:12px Arial,sans-serif; color:var(--muted); margin-bottom:1.6rem; }
+.route-panel blockquote { font:25px/1.25 var(--serif); margin:0 0 1.8rem; }
+.route-drawing { height:45px; border-top:2px dotted #839789; display:flex; justify-content:space-between; margin-top:auto; }
+.route-drawing i { width:10px; height:10px; background:#486b61; border:2px solid #f6f4ee; border-radius:50%; margin-top:-6px; }
+.small-start { font-size:12px; color:var(--muted); }.clear-start { font:30px/1.2 var(--serif); margin:0 0 2rem; }
+.after-panel { background:#e8eee8; }.after-panel .route-drawing { margin:0 0 1rem; }.after-panel blockquote { font-size:22px; margin-bottom:0; }
+.take-it-further { background:#e8eee8; padding:3rem; display:grid; grid-template-columns:1fr 1fr; gap:4rem; margin:2rem 0 5rem; border-radius:2px 42px 2px 2px; }
+.take-it-further h2 { font-size:40px; margin-bottom:1.4rem; }.take-it-further p { font-size:14px; }
+.practice-prompt blockquote { font:26px/1.45 var(--serif); margin:1rem 0 1.8rem; }
+.research-record { max-width:100%; padding-bottom:3rem; }
+.research-record > h2 { font-size:30px; }.research-record > p { max-width:75ch; font-size:14px; }
+.research-disclosure { margin-top:1.5rem; border-top:1px solid var(--line); padding-top:1rem; }
+.research-disclosure > summary { min-height:44px; cursor:pointer; font-size:16px; }
+.evidence-intro { max-width:75ch; margin:1rem 0; }
+.evidence-case { border-top:1px solid var(--line); padding:1rem 0; }
+.evidence-case > summary { display:flex; gap:1rem; justify-content:space-between; min-height:44px; align-items:center; cursor:pointer; }
+.evidence-case > summary::before { content:'+'; color:var(--accent); font-size:1.5rem; }
+.evidence-case[open] > summary::before { content:'−'; }
+.evidence-case > summary span:first-of-type { flex:1; }.evidence-case > summary span:last-child { color:var(--muted); font-size:13px; white-space:nowrap; }
+.evidence-case h3 { margin:1.5rem 0 .8rem; font-size:24px; }.evidence-case li { margin:.6rem 0; }
+.evidence-text { white-space:pre-wrap; overflow-wrap:anywhere; padding:1rem; background:#eeeee6; font:13px/1.7 monospace; }
+.evidence-table { width:100%; border-collapse:collapse; font-size:14px; }.evidence-table th,.evidence-table td { text-align:left; padding:.8rem .5rem; border-bottom:1px solid var(--line); }.evidence-table th { font-weight:600; }
+.evidence-links { display:flex; gap:1rem 1.5rem; flex-wrap:wrap; margin:1.5rem 0; }
+@media(max-width:760px) { .benefit-summary,.work-hero,.work-story,.take-it-further { grid-template-columns:1fr; gap:2rem; } .work-evidence { padding-top:35px; } .work-hero { padding-bottom:2rem; } .hero-proof { padding:1.8rem; } .hero-proof blockquote { font-size:40px; } .work-story { padding:40px 0; } .story-heading > p { max-width:60ch; } .capability-note { margin-top:1rem; } .take-it-further { padding:1.8rem; margin-bottom:3rem; } .benefit-preview { padding:1.8rem; } }
+@media(max-width:420px) { .panel-comparison { gap:.6rem; }.route-panel { padding:1rem; min-height:260px; }.route-panel blockquote { font-size:21px; }.clear-start { font-size:26px; }.name-strip { gap:1rem; font-size:24px; }.names-row { padding:1rem; }.evidence-case > summary { flex-wrap:wrap; }.evidence-case > summary span:last-child { width:100%; padding-left:1.6rem; } }

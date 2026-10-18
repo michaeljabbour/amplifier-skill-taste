@@ -4,15 +4,25 @@
   "description": "A lightweight skill that guides users and agents toward taste and elegance through distinct experience, useful questions, deliberate reframing, and small verified refinements.",
   "skill_name": "improve-taste-and-elegance",
   "skill_detail_url": "https://chatgpt.com/skills?skill_id=6ad24a616a5c8191932249aac4254289",
-  "theme": {"family": "Amplifier Smart Tools", "version": "0.1.0", "accent": "#486b61"},
+  "theme": {
+    "family": "Amplifier Smart Tools",
+    "version": "0.1.0",
+    "accent": "#486b61"
+  },
   "examples": [
     {
       "id": "application",
       "kind": "Gentle refinement",
       "label": "A public-service form",
       "brief": "Help residents apply for support, with familiar language and as little repeated work as possible.",
-      "before": [4, 2],
-      "after": [4, 4],
+      "before": [
+        4,
+        2
+      ],
+      "after": [
+        4,
+        4
+      ],
       "baseline": "The language fits. The work repeats.",
       "baseline_detail": "Respectful, familiar wording serves the audience. Applicants still enter the same address on three forms.",
       "proposal": "Ask once. Reuse with a clear review step.",
@@ -28,8 +38,14 @@
       "kind": "Conceptual jump",
       "label": "An agent workflow",
       "brief": "Help a support team find the next unresolved customer issue, rather than beautify a rarely used export.",
-      "before": [2, 4],
-      "after": [4, 4],
+      "before": [
+        2,
+        4
+      ],
+      "after": [
+        4,
+        4
+      ],
       "baseline": "A polished answer to the wrong problem.",
       "baseline_detail": "A clean, maintainable one-click export solves a minor task. The team's urgent queue remains difficult to navigate.",
       "proposal": "Aim the same clear mechanism at the queue.",
@@ -45,8 +61,14 @@
       "kind": "Reframe, then refine",
       "label": "A service-outage update",
       "brief": "Give affected customers a trustworthy account of the disruption and a useful next action.",
-      "before": [2, 2],
-      "after": [4, 4],
+      "before": [
+        2,
+        2
+      ],
+      "after": [
+        4,
+        4
+      ],
       "baseline": "Lots of detail. Little direction.",
       "baseline_detail": "Internal terminology, duplicated status notes, and an uncertain timeline leave customers to work out what matters.",
       "proposal": "Lead with impact, action, and the next update.",
@@ -57,5 +79,63 @@
       "growth": "For the next update, ask a reviewer to point to the next action without an explanation.",
       "direction": "Improve the fit and the resolution together."
     }
-  ]
+  ],
+  "code_walkthrough": [
+    {
+      "label": "W · Worse alternative",
+      "title": "Shorter. Less useful.",
+      "point": [
+        1,
+        4
+      ],
+      "code": "def update(incident):\n    return f\"Status: {incident['status']}\"",
+      "why": "Taste 1: an internal status replaces the impact, next action, and promised update. Elegance 4: the mechanism is easy to follow within this narrow task; its brevity does not repair the mismatch.",
+      "gate": "FAIL · Required customer information is missing. Do not adopt.",
+      "move": "Rejected branch · Deleting the reason for the message is not a hillclimb.",
+      "risk": "A maintainer sees a tidy function; a customer has to ask what to do."
+    },
+    {
+      "label": "0 · Original baseline",
+      "title": "The right care, tangled together.",
+      "point": [
+        4,
+        2
+      ],
+      "code": "def update(incident):\n    message = \"We know this interrupts your day. \"\n    if incident[\"service\"] == \"Payments\":\n        message += \"Payments: \"\n    else:\n        message += incident[\"service\"] + \": \"\n    message += incident[\"impact\"] + \"\\n\"\n    message += \"Try: \" + incident[\"workaround\"] + \"\\n\"\n    message += \"Next update: \"\n    message += incident[\"next_update\"]\n    return message",
+      "why": "Taste 4: warmth, impact, action, and a next update deliberately serve an anxious audience. Elegance 2: a special case produces the same label as the general path, and assembly scatters the message structure.",
+      "gate": "PASS · Matches the supplied example. UNKNOWN · Wider input contract and customer comprehension.",
+      "move": "Baseline · Save the code and its exact output before changing it.",
+      "risk": "The awkward structure invites someone to remove the warm opening as incidental clutter."
+    },
+    {
+      "label": "1 · First delicate refinement",
+      "title": "Remove a branch. Keep the voice.",
+      "point": [
+        4,
+        3
+      ],
+      "code": "def update(incident):\n    message = \"We know this interrupts your day. \"\n    message += incident[\"service\"] + \": \"\n    message += incident[\"impact\"] + \"\\n\"\n    message += \"Try: \" + incident[\"workaround\"] + \"\\n\"\n    message += \"Next update: \"\n    message += incident[\"next_update\"]\n    return message",
+      "why": "Taste stays at 4: the same priorities and exact words survive. Elegance moves provisionally to 3: the redundant service branch disappears without adding an abstraction.",
+      "gate": "PASS · Exact output comparison for Payments and another service, using the stated string-input contract.",
+      "move": "Round 1 · Remove only the redundant branch. Expect less branching for a maintainer to reason through.",
+      "risk": "A special case might have undocumented meaning. Compare both paths; restore baseline if outputs differ."
+    },
+    {
+      "label": "2 · Second delicate refinement",
+      "title": "Make the message shape visible.",
+      "point": [
+        4,
+        4
+      ],
+      "code": "def update(incident):\n    return (\n        \"We know this interrupts your day. \"\n        f\"{incident['service']}: {incident['impact']}\\n\"\n        f\"Try: {incident['workaround']}\\n\"\n        f\"Next update: {incident['next_update']}\"\n    )",
+      "why": "Taste stays at 4: no new audience evidence justifies moving it higher. Elegance 4 is a hypothesis: the code now reads in the same order as the message, with no new framework or hidden owner.",
+      "gate": "PASS · Exact output comparison on the supplied cases. UNKNOWN · Whether maintainers find edits easier; customer comprehension remains untested.",
+      "move": "Round 2 · Replace scattered assembly with one visible message. Stop here and review the gain.",
+      "risk": "Formatting changes can alter whitespace. Require exact output parity; revert to round 1 if clarity does not improve."
+    }
+  ],
+  "evaluation": {
+    "path": "docs/evaluations/benchmark-2026-10-17",
+    "date": "October 17, 2026"
+  }
 }

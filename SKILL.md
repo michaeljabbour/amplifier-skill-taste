@@ -9,7 +9,7 @@ description: Guide users and agents toward taste and elegance through their dist
 
 Help the user notice, articulate, and develop their own judgment. Do not claim to give them taste or elegance, pronounce universal aesthetic verdicts, or rank their personality or competence. Treat their distinct experience as a source of insight, not noise to normalize away. Offer observations and productive challenges rather than flattering or automatically agreeing.
 
-Use taste to mean context-sensitive judgment about what matters, fit, coherence, and intentional choices. Use elegance to mean achieving the intended outcome clearly and economically without exporting hidden complexity to users, maintainers, or the future. Do not equate either with luxury, fashion, generic minimalism, fewer words, or fewer components. Complexity, ornament, roughness, and friction may be purposeful; ask what they accomplish before removing them.
+Use taste to mean context-sensitive judgment about what matters, fit, coherence, and intentional choices that preserve distinctive human intent and character. Use elegance to mean achieving the intended outcome clearly and economically without exporting hidden complexity to users, maintainers, or the future. Do not equate either with luxury, fashion, generic minimalism, fewer words, or fewer components. Complexity, ornament, roughness, and friction may be purposeful; ask what they accomplish before removing them.
 
 ## Elicit the user's lens
 
@@ -22,6 +22,8 @@ Start from available examples and context. Ask one or two useful questions at a 
 Invite personal experience without requiring intimate disclosure; examples and task constraints are enough. For technical work, a failure someone operated through can be as revealing as an admired design. For agents, use the user's expressed intent and examples; do not invent a biography, preferences, or lived experience.
 
 Reflect back a short, tentative interpretation: “It sounds like you value X because Y, while wanting to preserve Z. What am I missing?” Distinguish their stated values from your inference. Invite correction before consequential reframing; do not silently convert a provisional interpretation into a fixed preference. When they delegate judgment or cannot answer, state assumptions and offer a reversible exploration rather than stalling.
+
+Carry the reasons forward. Keep a compact decision note with the brief: the choice, whose stated intent or evidence supports it, what must survive, and what would justify revisiting it. Consult it before later suggestions; preserve deliberate exceptions unless there is a reason to reconsider them. Keep assumptions visibly provisional and incorporate the user's corrections. Include the note in the handoff, or save it alongside the artifact when authorized; do not claim persistent memory unless it was actually saved in a place future work will read.
 
 ## Establish provisional criteria and gates
 
@@ -50,5 +52,9 @@ Stop when success is met, no meaningful gain justifies the cost, or the agreed b
 ## Use a map only if it helps
 
 Offer independent taste/elegance coordinates as an optional conversation aid, never an objective person-measure or combined total. Prefer the user's self-placement and reasons; offer your provisional view as a hypothesis they can challenge. Use qualitative language by default. If numbers help, use the anchored 1–5 scales in references/calibration.md with evidence, confidence, and unknowns. Do not chase 5/5.
+
+When asked to show a spectrum or worked comparison, show the original, a plausible worse alternative, and a proposed better version against the same brief. Explain the concrete choices and their consequences for users and maintainers. For code, show actual code with its input contract and relevant behavior checks, not just descriptions. If a visual matrix is requested, place a consistently scaled map beneath each version with visible labels and a text equivalent; distinguish rejected alternatives from the proposed path. Read the worked-comparison guidance in references/calibration.md.
+
+Show the expected hillclimb as bounded steps from the baseline: one change, the reason for it, what stays, predicted movement on each independent axis, a check, and a regression or rollback condition. An axis may stay still, worsen, or remain unknown. Label proposed movement as a hypothesis until relevant evidence supports it; passing behavior checks does not establish aesthetic judgment or audience benefit. Keep the two-round default unless the user sets another budget.
 
 Keep responses lightweight: reflect the user's lens, surface the key tension, propose a jump or small adjustment, and explain how to learn from it. Read references/calibration.md for optional prompts and examples; do not recite it automatically.
