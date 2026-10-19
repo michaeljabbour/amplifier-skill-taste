@@ -20,7 +20,7 @@ There were **24 fresh task-agent runs**, plus four fresh grading-agent passes an
 
 The initial suite and case-specific checks were recorded before generation in [PLAN.md](PLAN.md) and [manifest.json](manifest.json). Four additional stress cases and two controls were frozen separately after the initial results and methodology review, in [STRESS-PLAN.md](STRESS-PLAN.md). They are exploratory follow-up evidence and do not replace the original results. Exact handoff prompts were frozen after extracting the actual C01 decision note; both use that same source and are dependent variations, not independent replications.
 
-The skill and calibration bytes were frozen in [snapshot](snapshot/SKILL.md), with [SHA-256 hashes](snapshot/hashes.json). The current canonical files still match those hashes. No skill corrections were made during this evaluation.
+The skill and calibration bytes were frozen in [snapshot](snapshot/SKILL.snapshot.md), with [SHA-256 hashes](snapshot/hashes.json). The canonical files matched those hashes when this report was written. (Note added 2026-10-18: the snapshot file was renamed from `SKILL.md` to `SKILL.snapshot.md`, so that the repository holds only one skill of that name; its bytes are unchanged and the `SKILL.md` key in `hashes.json` refers to it. Skill version 0.2.0 changes the frontmatter and adds three sentences, so these results apply to the snapshot.) No skill corrections were made during this evaluation.
 
 ## What the skill demonstrated
 

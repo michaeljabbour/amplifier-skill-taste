@@ -4,3 +4,5 @@ _site/
 __pycache__/
 *.pyc
 .DS_Store
+.taste/
+**/recipe-sessions/

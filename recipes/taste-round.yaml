@@ -1,0 +1,259 @@
+# One bounded taste/elegance round on an artifact, following
+# @taste-elegance:skills/improve-taste-and-elegance/SKILL.md. The recipe only
+# sequences the skill and puts the human at each decision. The method itself
+# lives in the skill.
+#
+# Usage:
+#   recipes(operation="execute", recipe_path="@taste-elegance:recipes/taste-round.yaml",
+#           context={"artifact": "docs/intro.md",
+#                    "brief": "Onboarding intro for new contributors; keep the founding story",
+#                    "lens": "I like writing that sounds like a person, not a press release"})
+#   # Pauses after "lens". Read the reflection, then answer through the gate:
+#   recipes(operation="approve", session_id="<id>", stage_name="lens",
+#           message="Route: hillclimb. Yes, the voice matters most; ...")
+#   recipes(operation="resume", session_id="<id>")
+#   # Pauses after "propose". Begin the message with adopt | revise: ... | reject: ...
+#   recipes(operation="approve", session_id="<id>", stage_name="propose", message="adopt")
+#   recipes(operation="resume", session_id="<id>")
+#   # Deny at either gate to stop. A denied run writes no decision-note entry.
+#
+# The artifact is edited only when apply == "true" AND the approval message at the
+# "propose" gate is exactly `adopt` (checked by the engine, not the model).
+# Otherwise the candidate stays a copy under work_dir.
+#
+# Why this recipe is legacy (no schema_version: 2): every step runs as
+# `agent: self`, the calling session's own agent. That session has the
+# taste-elegance bundle loaded, so the @taste-elegance: skill paths resolve and
+# the step can read files. A v2 closure refuses `self` and would also have to
+# carry this bundle itself so those mentions resolve. Migrating means naming a
+# concrete agent plus declaring a dependency that ships both it and this bundle.
+
+name: taste-round
+description: "One bounded taste/elegance round on an artifact: reflect the user's lens, propose one change as a copy, then record the decision (and apply it only when authorized)."
+version: "1.0.0"
+
+context:
+  artifact:
+    type: string
+    required: true
+    description: "Path to the artifact to work on"
+  brief:
+    type: string
+    required: true
+    description: "Purpose, audience, and what must survive"
+  lens:
+    type: string
+    default: ""
+    description: "The user's own words about what they value (optional)"
+  decision_note:
+    type: string
+    default: ""
+    description: "Decision note path; empty means <work_dir>/decision-note.md"
+  work_dir:
+    type: string
+    default: ".taste"
+  apply:
+    type: string
+    default: "false"
+    enum: ["false", "true"]
+    description: "\"true\" authorizes editing the artifact itself when the human adopts"
+  check_command:
+    type: string
+    default: ""
+    description: "Optional verification command, run via env after an applied change"
+  budget:
+    type: string
+    default: "2"
+    description: "Maximum rounds, counted from the decision note"
+  # The executor injects this at approval time. Declaring it here lets the
+  # static validator accept {{_approval_message}}.
+  _approval_message: ""
+  # Placeholders that the conditional steps overwrite when they run.
+  apply_result: "NOT APPLIED: apply is \"false\"; the artifact was not touched."
+  check_result: "No check run (apply is \"false\" or no check_command was given)."
+
+stages:
+  - name: lens
+    steps:
+      - id: reflect-lens
+        agent: self
+        prompt: |
+          First read_file @taste-elegance:skills/improve-taste-and-elegance/SKILL.md and follow it.
+          It is the method. This prompt frames only the first stage of one round.
+
+          Inputs:
+          - Artifact: {{artifact}}
+          - Brief (purpose, audience, what must survive): {{brief}}
+          - The user's lens, in their words (may be empty): {{lens}}
+          - Decision note: {{decision_note}} (if empty, use {{work_dir}}/decision-note.md)
+          - Round budget: {{budget}}
+
+          Read the artifact. Read the decision note if it exists, and respect its recorded
+          choices and deliberate exceptions. Count prior rounds as the entries headed
+          "## Round". This run is round (prior + 1). If prior rounds >= {{budget}}, say so
+          plainly and recommend stopping. Ask only whether the user wants to raise the budget,
+          and give no route.
+
+          You cannot talk to the user during this step. Do not answer your own questions.
+          Edit nothing. Give no verdict on the work or the person. Return, briefly:
+
+          1. Round: N of {{budget}}, plus any prior decisions that constrain this round.
+          2. Lens reflection, tentative: "It sounds like you value X because Y, while wanting
+             to preserve Z. What am I missing?"
+          3. Stated vs inferred: what the user actually said (in the brief, the lens, and the
+             note) set apart from your inference. If the lens is empty, label the lens ASSUMED.
+          4. Questions: one to three at most, each chosen to unlock the next decision.
+          5. Gates: a table of correctness, safety, accessibility, and feasibility. Mark each
+             pass, fail, unknown, or n.a., give a reason, and flag the critical ones.
+          6. Bottleneck: the one thing that most limits the work against the brief.
+          7. Route: recommend a conceptual jump or a delicate hillclimb based on the bottleneck,
+             say why, and give one line on the other route. If a critical gate fails or is
+             unknown, recommend repairing or verifying it first.
+        output: lens_reflection
+    approval:
+      required: true
+      prompt: |
+        {{lens_reflection}}
+
+        ---
+        Approve with a message that answers the questions, corrects the lens, and picks
+        the route (jump or hillclimb). For example: message="Route: hillclimb. Yes, but ..."
+        Deny to stop. Nothing has been written.
+
+  - name: propose
+    steps:
+      - id: propose-change
+        agent: self
+        prompt: |
+          First read_file @taste-elegance:skills/improve-taste-and-elegance/SKILL.md and follow it.
+          Also read @taste-elegance:skills/improve-taste-and-elegance/references/calibration.md
+          if you use its 1-5 anchors.
+
+          Inputs:
+          - Artifact: {{artifact}}
+          - Brief: {{brief}}
+          - Work dir: {{work_dir}}
+          - Decision note: {{decision_note}} (if empty, use {{work_dir}}/decision-note.md)
+
+          Output of the lens stage:
+          {{lens_reflection}}
+
+          The human's response at the lens gate. It overrides your inferences:
+          {{_approval_message}}
+
+          If the lens stage found the budget exhausted and the human did not explicitly raise
+          it, propose nothing, write nothing, and return "STOPPED: round budget reached."
+
+          Otherwise propose exactly ONE change. Use the route the human chose, or the
+          recommended route if they did not choose. Respect the decision note. A jump is one
+          materially different sketch, not a wholesale redesign.
+
+          Using the round number N from the lens stage, write into {{work_dir}}/round-N/:
+          - candidate.<same extension as the artifact>: a full copy of the artifact with only
+            this change applied. NEVER write to {{artifact}}. This discussion authorizes no
+            edits to it.
+          - proposal.md: the text below.
+          Read both files back to confirm they exist.
+
+          Return the same text you wrote to proposal.md:
+          1. The human's lens-gate response, verbatim.
+          2. The route, and the one change.
+          3. What changes, what stays, and what could be lost.
+          4. Predicted movement, each axis on its own and labeled HYPOTHESIS. Give taste and
+             elegance each as up, still, down, or unknown, with the reason. No combined score.
+          5. The check or inspection that would show whether the change worked.
+          6. The regression or rollback condition.
+          7. The gates this change touches.
+          8. The paths you wrote.
+          Never invent user tests or measured benefits.
+        output: proposal
+        timeout: 1200
+    approval:
+      required: true
+      prompt: |
+        {{proposal}}
+
+        ---
+        Approve with a message that begins with one word:
+          adopt                    keep this change (exactly "adopt"). It edits {{artifact}} only if apply is "true" (it is "{{apply}}").
+          revise: <what to change> record it, apply nothing, and rerun for the next round
+          reject: <why>            record it and apply nothing
+        Deny to stop without recording anything.
+
+  - name: record
+    steps:
+      - id: apply-change
+        condition: "{{apply}} == 'true' and {{_approval_message}} == 'adopt'"
+        agent: self
+        prompt: |
+          First read_file @taste-elegance:skills/improve-taste-and-elegance/SKILL.md and follow it.
+
+          The human's decision at the proposal gate: {{_approval_message}}
+
+          Proposal:
+          {{proposal}}
+
+          Continue only if the decision's first word is "adopt" (in any case) and the proposal
+          wrote a candidate file:
+          1. Copy {{artifact}} unchanged to baseline.<ext> beside the candidate in
+             {{work_dir}}/round-N/, then read it back.
+          2. Replace the contents of {{artifact}} with the candidate. Edit nothing else.
+          3. Read {{artifact}} back and confirm that it matches the candidate.
+          Then return "APPLIED", the baseline and candidate paths, and a short diff summary.
+
+          Otherwise make no edits and return "NOT APPLIED: <reason>".
+        output: apply_result
+
+      # The command arrives through env and is never spliced into the shell text.
+      # Only the env var is placed in the shell string; its contents are not
+      # spliced in. This runs whenever apply is "true", even if nothing was
+      # applied. The record step labels which version of the artifact it checked.
+      - id: run-check
+        condition: "{{apply}} == 'true' and {{check_command}} != ''"
+        type: bash
+        env:
+          CHECK_COMMAND: "{{check_command}}"
+        command: |
+          sh -c "$CHECK_COMMAND" 2>&1
+          echo "check exit code: $?"
+        output: check_result
+        timeout: 600
+
+      - id: record-decision
+        agent: self
+        prompt: |
+          First read_file @taste-elegance:skills/improve-taste-and-elegance/SKILL.md and follow it.
+
+          Inputs:
+          - Artifact: {{artifact}}
+          - Brief: {{brief}}
+          - Decision note: {{decision_note}} (if empty, use {{work_dir}}/decision-note.md)
+          - Lens stage: {{lens_reflection}}
+          - Proposal (includes the human's lens-gate response): {{proposal}}
+          - The human's decision at the proposal gate: {{_approval_message}}
+          - Apply result: {{apply_result}}
+          - Check output: {{check_result}}
+
+          1. If the apply result is APPLIED, recheck the gates against actual evidence: the
+             applied file and the check output. If the check failed, or a critical gate now
+             fails, restore {{artifact}} from the baseline copy, read it back, and report the
+             restore. Make no other edit to {{artifact}}. If nothing was applied, do not touch
+             {{artifact}}.
+          2. Append one entry to the decision note. Never overwrite it, and create it if it
+             is missing:
+
+             ## Round N ({{session.started}})
+             - Choice: adopted, revised, rejected, or rolled back, and the change in one line
+             - Support: whose stated intent or which evidence supports the choice. Quote the user and mark inferences.
+             - Must survive: ...
+             - Revisit if: ...
+             - Unverified: ...
+             - Next: one question or experiment
+
+             If the proposal stage STOPPED at the budget, head the entry "## Stopped"
+             instead. A stopped entry does not count as a round. Read the note back.
+
+          Return a plain summary. Say what changed, with paths, or that nothing changed. Give
+          the gate status and its evidence, and say what remains unverified. Claim no
+          improvement that nobody has observed.
+        output: final_output

@@ -10,6 +10,7 @@ from urllib.parse import unquote, urlsplit
 from zipfile import ZipFile
 
 ROOT = Path(__file__).resolve().parents[1]
+SKILL_DIR = ROOT / 'skills/improve-taste-and-elegance'
 
 
 class Page(HTMLParser):
@@ -104,15 +105,15 @@ def check(output):
         assert all(formatter(incident) == expected for formatter in formatters[1:]), 'Refinement changed the customer message'
     assert len(re.findall(r'class="code-card"', raw)) == 4, 'Missing code version'
     print('PASS: four code versions rendered; baseline and two refinements preserve exact output on both service paths')
-    skill = (ROOT / 'SKILL.md').read_text(encoding='utf-8')
+    skill = (SKILL_DIR / 'SKILL.md').read_text(encoding='utf-8')
     assert page.skill == skill, 'Copy source differs from canonical SKILL.md'
     for name in ('SKILL.md', 'references/calibration.md'):
-        assert (ROOT / name).read_bytes() == (output / name).read_bytes(), f'Download changed source: {name}'
+        assert (SKILL_DIR / name).read_bytes() == (output / name).read_bytes(), f'Download changed source: {name}'
     with ZipFile(output / 'improve-taste-and-elegance.zip') as bundle:
         assert bundle.namelist() == ['improve-taste-and-elegance/SKILL.md', 'improve-taste-and-elegance/references/calibration.md']
         assert bundle.testzip() is None
         for name in ('SKILL.md', 'references/calibration.md'):
-            assert bundle.read('improve-taste-and-elegance/' + name) == (ROOT / name).read_bytes(), f'Bundle changed source: {name}'
+            assert bundle.read('improve-taste-and-elegance/' + name) == (SKILL_DIR / name).read_bytes(), f'Bundle changed source: {name}'
     assert len(page.downloads) == 2, 'Expected skill and bundle download links'
     examples = json.loads((output / 'assets/examples.json').read_text(encoding='utf-8'))
     assert len(examples) == 3 and len({e['id'] for e in examples}) == 3

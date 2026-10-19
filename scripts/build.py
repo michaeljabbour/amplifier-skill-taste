@@ -10,6 +10,8 @@ from pathlib import Path
 from zipfile import ZIP_DEFLATED, ZipFile, ZipInfo
 
 ROOT = Path(__file__).resolve().parents[1]
+SKILL_DIR = ROOT / 'skills/improve-taste-and-elegance'
+SKILL_FILES = ('SKILL.md', 'references/calibration.md')
 
 
 def escape(value):
@@ -62,8 +64,8 @@ def evaluation_content(config, skill, calibration):
 def build(output):
     site = ROOT / 'site'
     config = json.loads((site / 'site.json').read_text(encoding='utf-8'))
-    skill = (ROOT / 'SKILL.md').read_text(encoding='utf-8')
-    calibration = (ROOT / 'references/calibration.md').read_text(encoding='utf-8')
+    skill = (SKILL_DIR / 'SKILL.md').read_text(encoding='utf-8')
+    calibration = (SKILL_DIR / 'references/calibration.md').read_text(encoding='utf-8')
     # The site presents the canonical anchors and questions, not a second rubric.
     taste_block, elegance_block = calibration.split('Taste:\n', 1)[1].split('Elegance:\n', 1)
     taste = re.findall(r'^- [1-5]: (.+)$', taste_block, re.M)
@@ -120,7 +122,13 @@ def build(output):
         if asset.is_file():
             shutil.copy2(asset, assets / asset.name)
     (assets / 'examples.json').write_text(json.dumps(config['examples'], ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
-    documentation = ['SKILL.md', 'references/calibration.md', 'README.md', 'LICENSE', 'site/README.md', 'site/theme/LICENSE']
+    # Publish the skill at the site root (stable download links) and at its source
+    # path (so README links work both on GitHub and on the site).
+    for name in SKILL_FILES:
+        for target in (output / name, output / SKILL_DIR.relative_to(ROOT) / name):
+            target.parent.mkdir(parents=True, exist_ok=True)
+            shutil.copy2(SKILL_DIR / name, target)
+    documentation = ['README.md', 'LICENSE', 'site/README.md', 'site/theme/LICENSE']
     documentation.extend(str(path.relative_to(ROOT)) for path in sorted((ROOT / 'docs').glob('*.md')))
     documentation.extend(str(path.relative_to(ROOT)) for path in sorted((ROOT / config['evaluation']['path']).rglob('*')) if path.is_file() and path.suffix in ('.md', '.json', '.txt', '.py'))
     documentation.extend(str(path.relative_to(ROOT)) for path in sorted((ROOT / 'docs/screenshots').glob('*.jpg')))
@@ -131,11 +139,11 @@ def build(output):
     (output / '.nojekyll').touch()
     # Fixed archive metadata makes download contents reproducible across builds.
     with ZipFile(output / 'improve-taste-and-elegance.zip', 'w', ZIP_DEFLATED) as bundle:
-        for name in ('SKILL.md', 'references/calibration.md'):
+        for name in SKILL_FILES:
             info = ZipInfo('improve-taste-and-elegance/' + name, (2026, 10, 16, 0, 0, 0))
             info.compress_type = ZIP_DEFLATED
             info.external_attr = 0o644 << 16
-            bundle.writestr(info, (ROOT / name).read_bytes())
+            bundle.writestr(info, (SKILL_DIR / name).read_bytes())
     return output
 
 

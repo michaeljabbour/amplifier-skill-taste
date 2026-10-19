@@ -1,0 +1,146 @@
+# Worked comparison, following @taste-elegance:skills/improve-taste-and-elegance/SKILL.md
+# and the worked-comparison guidance in references/calibration.md. It shows the
+# original, a plausible worse alternative, and a proposed better version, all
+# against the same brief. Read-only: the artifact is never modified. Only
+# `output` is written.
+#
+# Usage:
+#   recipes(operation="execute", recipe_path="@taste-elegance:recipes/taste-spectrum.yaml",
+#           context={"artifact": "src/format_incident.py",
+#                    "brief": "Incident update for anxious customers; keep the acknowledgement",
+#                    "include_map": "true"})
+#   # Pauses after "lens". Read the reflection, then answer through the gate:
+#   recipes(operation="approve", session_id="<id>", stage_name="lens",
+#           message="Route: hillclimb. The acknowledgement is non-negotiable; ...")
+#   recipes(operation="resume", session_id="<id>")
+#   # Deny at the gate to stop. Nothing is written.
+#
+# Why this recipe is legacy (no schema_version: 2): every step runs as
+# `agent: self`, the calling session's own agent. That session has the
+# taste-elegance bundle loaded, so the @taste-elegance: skill paths resolve. A
+# v2 closure refuses `self` and would also have to carry this bundle itself.
+
+name: taste-spectrum
+description: "Worked comparison: the original, a plausible worse alternative, and a proposed better version against the same brief, with an optional independent taste/elegance map."
+version: "1.0.0"
+
+context:
+  artifact:
+    type: string
+    required: true
+    description: "Path to the artifact (never modified)"
+  brief:
+    type: string
+    required: true
+    description: "Purpose, audience, and what must survive"
+  lens:
+    type: string
+    default: ""
+    description: "The user's own words about what they value (optional)"
+  output:
+    type: string
+    default: ".taste/spectrum.md"
+  include_map:
+    type: string
+    default: "false"
+    enum: ["false", "true"]
+    description: "\"true\" adds independent 1-5 taste/elegance placements beneath each version"
+  # The executor injects this at approval time. Declaring it here lets the
+  # static validator accept {{_approval_message}}.
+  _approval_message: ""
+
+stages:
+  - name: lens
+    steps:
+      - id: reflect-lens
+        agent: self
+        prompt: |
+          First read_file @taste-elegance:skills/improve-taste-and-elegance/SKILL.md and follow it.
+          It is the method. This prompt frames only the lens stage of a worked comparison.
+
+          Inputs:
+          - Artifact: {{artifact}}
+          - Brief (purpose, audience, what must survive): {{brief}}
+          - The user's lens, in their words (may be empty): {{lens}}
+
+          Read the artifact. You cannot talk to the user during this step. Do not answer your
+          own questions. Edit nothing. Give no verdict on the work or the person. Return,
+          briefly:
+
+          1. Lens reflection, tentative: "It sounds like you value X because Y, while wanting
+             to preserve Z. What am I missing?"
+          2. Stated vs inferred: what the user actually said set apart from your inference.
+             If the lens is empty, label the lens ASSUMED.
+          3. Questions: one to three at most, each chosen to unlock the comparison.
+          4. Gates: a table of correctness, safety, accessibility, and feasibility for the
+             original. Mark each pass, fail, unknown, or n.a., give a reason, and flag the
+             critical ones.
+          5. Bottleneck, and the route the better version should take (conceptual jump or
+             delicate hillclimb), with why.
+        output: lens_reflection
+    approval:
+      required: true
+      prompt: |
+        {{lens_reflection}}
+
+        ---
+        Approve with a message that answers the questions, corrects the lens, and picks
+        the route (jump or hillclimb). Deny to stop. Nothing has been written.
+
+  - name: compare
+    steps:
+      - id: write-comparison
+        agent: self
+        prompt: |
+          First read_file @taste-elegance:skills/improve-taste-and-elegance/SKILL.md and
+          @taste-elegance:skills/improve-taste-and-elegance/references/calibration.md. Follow
+          the calibration file's worked-comparison guidance and its anchors.
+
+          Inputs:
+          - Artifact (read-only; NEVER modify it): {{artifact}}
+          - Brief: {{brief}}
+          - Output file: {{output}}
+          - Include map: {{include_map}}
+
+          Output of the lens stage:
+          {{lens_reflection}}
+
+          The human's response at the lens gate. It overrides your inferences:
+          {{_approval_message}}
+
+          Write the worked comparison to {{output}}, creating parent directories as needed.
+          Use ONE shared brief for all three versions. For code, also use one shared input
+          contract.
+
+          1. Original: the real artifact. If it is long, excerpt the relevant part and say
+             exactly what you excerpted.
+          2. Plausible worse alternative, marked REJECTED. It must expose a real tradeoff, not
+             a caricature. For example, it might be shorter but drop something the audience
+             needs.
+          3. Proposed better version: one bounded change from the original, on the route the
+             human chose. Say what changes, what stays, and what could be lost.
+
+          For each version, show:
+          - The artifact itself. For code, show actual code, its input contract, and the
+            relevant behavior checks. Say whether you ran each check, and never report a
+            result you did not obtain.
+          - Gate status, with reasons. A critical failure blocks adoption no matter how well
+            the version reads.
+          - The concrete choices and their consequences for users and maintainers.
+
+          If include_map is "true", place taste and elegance beneath each version on the
+          independent 1-5 anchors from calibration.md. The axes stay separate; never combine
+          them into one score. Give each placement its evidence, a confidence (low, medium, or
+          high), and its unknowns. Ranges or "unknown" are allowed. Draw the same small text
+          grid, with the same scale and labels, beneath every version, and add a text
+          equivalent. Keep the rejected alternative marked REJECTED. Invite the user to place
+          the versions themselves before relying on yours. Do not imply measured distances.
+
+          Label the whole document ILLUSTRATIVE / PROVISIONAL. Predicted movement is a
+          hypothesis, and passing behavior checks does not establish taste or audience
+          benefit. End with the evidence obtained, the remaining unknowns, a keep-or-revert
+          proposal, the stopping condition, and one next question.
+
+          Read {{output}} back to confirm it was written. Return its path and a short summary.
+        output: final_output
+        timeout: 1200
