@@ -35,7 +35,7 @@ opening the HTML with `file://`.
 - `site.js`: native example selection, baseline/proposed views, copy feedback.
 - `assets/`: original SVG favicon and share illustration. Some social platforms
   require raster share images; no claim of platform support is made for the SVG.
-- `../SKILL.md` and `../references/calibration.md`: source for the download, bundle,
+- `../skills/improve-taste-and-elegance/SKILL.md` and its `references/calibration.md`: source for the download, bundle,
   embedded source, optional qualitative anchors, and eight invitations. Do not fork the rubric
   into another content file.
 

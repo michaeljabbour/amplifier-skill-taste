@@ -1,0 +1,32 @@
+bundle:
+  name: taste-elegance-behavior
+  version: 0.2.0
+  description: |
+    Wires the improve-taste-and-elegance skill (tool-skills), the /taste mode
+    (hooks-mode), and two staged recipes (tool-recipes) onto a host bundle.
+    Adds no context of its own; the skill, mode, and recipes load only when used.
+
+includes:
+  - bundle: git+https://github.com/microsoft/amplifier-bundle-modes@main#subdirectory=behaviors/modes.yaml
+
+hooks:
+  - module: hooks-mode
+    source: git+https://github.com/microsoft/amplifier-bundle-modes@main#subdirectory=modules/hooks-mode
+    config:
+      search_paths:
+        - "@taste-elegance:modes"
+
+tools:
+  - module: tool-skills
+    source: git+https://github.com/microsoft/amplifier-bundle-skills@main#subdirectory=modules/tool-skills
+    config:
+      # An @mention resolves against the bundle cache (or the local checkout), so
+      # the skill never drifts from this repo. A relative path would resolve
+      # against the session's working directory instead.
+      skills:
+        - "@taste-elegance:skills"
+  - module: tool-recipes
+    source: git+https://github.com/microsoft/amplifier-bundle-recipes@main#subdirectory=modules/tool-recipes
+    config:
+      session_dir: ~/.amplifier/projects/{project}/recipe-sessions
+      auto_cleanup_days: 7

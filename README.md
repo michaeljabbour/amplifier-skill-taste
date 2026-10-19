@@ -6,13 +6,31 @@ A lightweight skill that guides users and agents toward taste and elegance throu
 
 **Taste** is context-sensitive fit for an audience, purpose, and constraints. **Elegance** is a clear, economical resolution that accounts for users, maintainers, operators, and future work. Neither means luxury or minimalism. Evaluate artifacts and decisions, never a person's identity or inherent ability.
 
-This project pairs the reusable [`improve-taste-and-elegance` skill](SKILL.md) with an explanatory static website. The skill and [calibration reference](references/calibration.md) match the canonical revised source supplied for the existing [user-created skill](https://chatgpt.com/skills?skill_id=6ad24a616a5c8191932249aac4254289), including the user's clarification about facilitation, agency, and the choice between refinement and reframing. This project does not itself modify the installed skill.
+This project pairs the reusable [`improve-taste-and-elegance` skill](skills/improve-taste-and-elegance/SKILL.md) with an explanatory static website. The skill and [calibration reference](skills/improve-taste-and-elegance/references/calibration.md) began as the canonical revised source supplied for the existing [user-created skill](https://chatgpt.com/skills?skill_id=6ad24a616a5c8191932249aac4254289), including the user's clarification about facilitation, agency, and the choice between refinement and reframing. Version 0.2.0 adds Amplifier frontmatter and three clarifying sentences (delegation, where to save the decision note, and reference paths); the calibration reference is unchanged. The [2026-10-17 evaluation](docs/evaluations/benchmark-2026-10-17/REPORT.md) applies to its frozen snapshot. This project does not itself modify the installed skill.
 
 ## Use the skill
 
 Give an agent the skill and a concrete artifact or set of options. Include the audience, purpose, constraints, and what success would look like. Share what shaped your choices: an experience, an admired or disliked example and why, a tension, what feels wrong, or a distinct intent that must survive changes. The agent should reflect your reasoning for correction and derive provisional criteria with you. This is a compact conversation, not a large questionnaire; at most three missing-context questions are appropriate, only where answers would change the recommendation.
 
-If your tool supports reusable skills, place `SKILL.md` and `references/calibration.md` together in an `improve-taste-and-elegance` skill directory according to that tool's instructions. Keep the relative `references/` path intact.
+If your tool supports reusable skills, copy the `skills/improve-taste-and-elegance/` directory (`SKILL.md` plus `references/calibration.md`) according to that tool's instructions. Keep the relative `references/` path intact.
+
+### In Amplifier
+
+This repository is also an Amplifier bundle (`taste-elegance`). Add its behavior to your current host:
+
+```bash
+amplifier bundle add "git+https://github.com/michaeljabbour/amplifier-skill-taste@main#subdirectory=behaviors/taste-elegance.yaml" --app
+```
+
+For a local checkout that stays in step with your edits, use `file:///<path-to-checkout>/behaviors/taste-elegance.yaml` instead. Remove with `amplifier bundle remove taste-elegance-behavior --app`. Start a new session, then:
+
+- **Skill:** `/improve-taste-and-elegance`, or ask for it by name. Nothing loads until it is used.
+- **Mode:** `/taste` sets a working posture for a session: your lens first, one move at a time; every file edit asks you first, and shell or delegation warns once. `/mode off` leaves it.
+- **Recipes:** staged runs that pause for your answers at each gate.
+  - `@taste-elegance:recipes/taste-round.yaml` — one bounded round: reflect your lens, propose one change as a copy, then record a dated decision note. The artifact is edited only with `apply: "true"` and an approval message of exactly `adopt`; working copies and the decision note go in `.taste/` in your working directory.
+  - `@taste-elegance:recipes/taste-spectrum.yaml` — a worked comparison of the original, a plausible worse version, and a proposed better one against the same brief. It never edits the artifact.
+
+The skill is registered through `tool-skills`. If no other bundle in your host configures skill sources, Amplifier stops scanning its default skill directories (`.amplifier/skills` in the workspace and `~/.amplifier/skills`); add them to your own skills configuration if you need them. Don't also keep a hand-copied `improve-taste-and-elegance` in `~/.amplifier/skills`, or two copies will compete.
 
 Example requests:
 
@@ -28,7 +46,7 @@ A useful response reflects your intent and provisional criteria, states assumpti
 
 Correctness, safety, accessibility, and feasibility are gates. Mark each **pass**, **fail**, **unknown**, or **not applicable**, with a reason. A failed critical gate blocks recommendation. An unknown critical gate is verification work, never an implicit pass. Repair the gate before polishing.
 
-The map is a conversation aid, not an objective measurement, credential, or AI scoring authority. Prefer the user's self-placement and reasons, and use qualitative language by default. The [independent 1–5 anchors](references/calibration.md) are optional when numbers help. Do not average the axes, add a combined score, use decimals, or imply universal rankings. Use a range or “unknown” when evidence is weak; name confidence and missing evidence for each axis. You can challenge the reading and revise the shared criteria.
+The map is a conversation aid, not an objective measurement, credential, or AI scoring authority. Prefer the user's self-placement and reasons, and use qualitative language by default. The [independent 1–5 anchors](skills/improve-taste-and-elegance/references/calibration.md) are optional when numbers help. Do not average the axes, add a combined score, use decimals, or imply universal rankings. Use a range or “unknown” when evidence is weak; name confidence and missing evidence for each axis. You can challenge the reading and revise the shared criteria.
 
 The site's four quadrants are shorthand: right solution, beautifully resolved; right idea, awkward execution; polished answer, wrong problem; and rethink direction and execution. The selectable examples and before/after coordinates are **illustrative hypotheses, not measured data or completed assessments**. A real assessment needs a shared brief, gate checks, and evidence. Quadrants are not rigid scoring cutoffs.
 
@@ -63,8 +81,11 @@ The public source is in the [amplifier-skill-taste repository](https://github.co
 
 ## Project contents
 
-- `SKILL.md` — canonical revised instructions for facilitation, agency, jumps, and refinements.
-- `references/calibration.md` — eight invitations, two ways forward, optional independent anchors, and examples.
+- `skills/improve-taste-and-elegance/SKILL.md` — canonical revised instructions for facilitation, agency, jumps, and refinements.
+- `skills/improve-taste-and-elegance/references/calibration.md` — eight invitations, two ways forward, optional independent anchors, and examples.
+- `bundle.md`, `behaviors/taste-elegance.yaml` — the Amplifier bundle and its installable behavior.
+- `modes/taste.md` — the `/taste` mode.
+- `recipes/` — the `taste-round` and `taste-spectrum` staged recipes.
 - `docs/EXAMPLES.md` — a worked, explicitly proposal-only assessment.
 - `scripts/build.py` — dependency-free static build entry point.
 - `scripts/check.py` — local link, source, and download integrity checks.
