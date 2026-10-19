@@ -7,6 +7,8 @@
 - Rename the frozen benchmark copy to `SKILL.snapshot.md` so no second skill with the same name exists in the repository.
 - Add the `/taste` mode and the staged `taste-round` and `taste-spectrum` recipes.
 - Skill: lead the description with when to use it; mark it user-invocable; add a license; say what to do when the user cannot be asked (for example, when delegated); give concrete places to save the decision note; note that reference paths are relative to the skill directory.
+- Open the site with a one-minute lesson film: two yard-sale signs teach the two questions before the skill appears. Captions, a poster and a 15-second cut ship beside it, and [docs/FILM.md](docs/FILM.md) explains what it teaches and how it was checked.
+- The integrity check now verifies video poster references.
 
 ## 0.1.0 — 2026-10-16
 

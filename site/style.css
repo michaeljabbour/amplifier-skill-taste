@@ -228,6 +228,20 @@ html { scroll-padding-top: 24px; }
   .footer .nav { gap: 22px; font-size: 12px; }
   .source-actions { flex-wrap: wrap; }
 }
+/* The one-minute lesson */
+.lesson { margin: 58px 0 0; scroll-margin-top: 20px; }
+.lesson-frame { position: relative; aspect-ratio: 16 / 9; background: var(--faint); border: 1px solid var(--line); box-shadow: 0 34px 70px -40px rgba(37, 40, 35, .45); }
+.lesson-frame video { position: absolute; inset: 0; width: 100%; height: 100%; display: block; background: var(--faint); }
+.lesson-caption { display: grid; grid-template-columns: 1.4fr 1fr; gap: 16px 48px; align-items: start; padding-top: 20px; }
+.lesson-caption h2 { font-size: 23px; letter-spacing: -.02em; }
+.lesson-caption p { font-size: 13px; color: var(--muted); margin-top: 6px; max-width: 62ch; line-height: 1.6; }
+.lesson-links { display: flex; flex-wrap: wrap; gap: 8px 24px; justify-content: end; }
+.lesson-links a { font-size: 14px; }
+@media (max-width: 900px) {
+  .lesson { margin-top: 44px; }
+  .lesson-caption { grid-template-columns: 1fr; }
+  .lesson-links { justify-content: start; }
+}
 @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } *, *::before, *::after { transition: none !important; animation: none !important; } }
 @media (max-width: 360px) { .quadrant { padding: 10px 7px; } .quadrant h3 { font-size: 15px; } }
 
