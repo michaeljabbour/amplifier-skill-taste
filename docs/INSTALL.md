@@ -24,4 +24,4 @@ Download the complete ZIP from [the public site](https://michaeljabbour.github.i
 
 Bring a draft, design or artifact and what matters to you about it. Compare it with a worse move and a better one, then choose with the reasons visible.
 
-A universal beauty score. Taste and elegance stay separate, and your intent stays part of the brief.
+Taste and elegance stay separate; your intent remains part of the brief.
