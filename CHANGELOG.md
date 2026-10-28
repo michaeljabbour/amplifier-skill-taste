@@ -1,5 +1,10 @@
 # Changelog
 
+## Unreleased — improvement-round contract
+
+- Add the optional portable improvement-round/v1 record and contract pointer for a shared brief, immutable baseline, change hypothesis, gates, same-brief comparison, independent taste/elegance reasons, recorded human keep/undo and stopping budget.
+- Keep harness bookkeeping, score ranking and technical validity separate from human adoption and runtime authorization. No aesthetic-benefit or outside-use claim is added.
+
 ## 0.2.0 — 2026-10-18
 
 - Package the repository as the `taste-elegance` Amplifier bundle: a thin `bundle.md` and an installable `behaviors/taste-elegance.yaml`.

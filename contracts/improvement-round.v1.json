@@ -1,0 +1,5 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "../skills/improve-taste-and-elegance/references/improvement-round.schema.json",
+  "description": "Pointer to the canonical portable contract owned by Taste \u00d7 Elegance."
+}
