@@ -24,3 +24,7 @@
 - Add project documentation and local integrity checks. The initial source upload was private; the later authorized public release adds GitHub Pages.
 
 - Add a checked GitHub Pages workflow and make the live site the primary README and repository website link.
+
+## Portable packaging review — 2026-10-28
+
+- Added source ownership and installation records, a licensed self-contained installer and evidence limits. Existing native interfaces remain available.

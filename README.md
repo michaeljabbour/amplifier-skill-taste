@@ -104,3 +104,10 @@ MIT; see [LICENSE](LICENSE). The preserved family-theme snapshot has its own
 [MIT notice](site/theme/LICENSE). The page follows Decisioncraft's local static site
 as a design and implementation reference. Its product text, media, repository
 configuration, and institutional attribution are not part of this project.
+
+
+## Portable capability and ownership
+
+Make it more intentional and simpler while keeping it yours.
+
+Read the [installation guide](docs/INSTALL.md) for the supported local path and [consolidation record](docs/CONSOLIDATION.md) for ownership and evidence limits. Canonical catalog name: **Taste × Elegance**; repository: `amplifier-skill-taste`.

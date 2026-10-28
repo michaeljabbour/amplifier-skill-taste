@@ -1,0 +1,131 @@
+{
+  "schema_version": 1,
+  "id": "taste-elegance",
+  "display_name": "Taste \u00d7 Elegance",
+  "kind": "skill",
+  "promise": "Make it more intentional and simpler while keeping it yours.",
+  "audience": "Authors and builders refining work while preserving intent.",
+  "trigger": "Compare against the same brief, keep the baseline and record the reason for keeping or undoing a change.",
+  "skill_path": "skills/improve-taste-and-elegance",
+  "install_commands": [
+    "python3 scripts/capability.py install --dest /path/to/host/skills"
+  ],
+  "runtime_install_commands": [],
+  "modes": [],
+  "examples": [],
+  "boundaries": [
+    "The existing canonical method and native interfaces remain the source of truth.",
+    "Publication, source inspection, component tests and outside-user benefit are separate claims."
+  ],
+  "evidence_summary": "The new improvement-round contract is tested with Design Loop separately. A model score is not human adoption or permission to ship.",
+  "verification": [],
+  "sources": [
+    {
+      "repo": "amplifier-skill-taste",
+      "commit": "40b90bd7bbf66f3e65f57fabb55773759984a4bf",
+      "role": "Existing implementation and retained history",
+      "license": "MIT"
+    }
+  ],
+  "consolidation": [
+    {
+      "repo": "amplifier-skill-taste",
+      "paths": [
+        "skills/improve-taste-and-elegance"
+      ],
+      "destination": "amplifier-skill-taste:canonical method or implementation",
+      "role": "method",
+      "action": "keep",
+      "why": "Elicited lens, refine-versus-reframe choice, predicted benefit/regression, same-brief alternatives and a bounded keep/undo cycle.",
+      "interface": "Versioned request/result or plain-file contract; adapters do not own the method.",
+      "revision": "40b90bd7bbf66f3e65f57fabb55773759984a4bf",
+      "sources": [
+        "https://github.com/michaeljabbour/amplifier-skill-taste/tree/40b90bd7bbf66f3e65f57fabb55773759984a4bf/skills/improve-taste-and-elegance"
+      ],
+      "source_paths": [
+        {
+          "path": "skills/improve-taste-and-elegance",
+          "url": "https://github.com/michaeljabbour/amplifier-skill-taste/tree/40b90bd7bbf66f3e65f57fabb55773759984a4bf/skills/improve-taste-and-elegance"
+        }
+      ]
+    },
+    {
+      "repo": "amplifier-skill-taste",
+      "paths": [
+        "bundle.md",
+        "behaviors",
+        "modes",
+        "recipes"
+      ],
+      "destination": "amplifier-skill-taste:optional Amplifier surface",
+      "role": "adapter",
+      "action": "keep",
+      "why": "The host surface loads the canonical method rather than reproducing it.",
+      "interface": "On-demand discovery and bounded recipe; no always-on duplicate rubric.",
+      "revision": "40b90bd7bbf66f3e65f57fabb55773759984a4bf",
+      "sources": [
+        "https://github.com/michaeljabbour/amplifier-skill-taste/blob/40b90bd7bbf66f3e65f57fabb55773759984a4bf/bundle.md",
+        "https://github.com/michaeljabbour/amplifier-skill-taste/tree/40b90bd7bbf66f3e65f57fabb55773759984a4bf/behaviors",
+        "https://github.com/michaeljabbour/amplifier-skill-taste/tree/40b90bd7bbf66f3e65f57fabb55773759984a4bf/modes",
+        "https://github.com/michaeljabbour/amplifier-skill-taste/tree/40b90bd7bbf66f3e65f57fabb55773759984a4bf/recipes"
+      ],
+      "source_paths": [
+        {
+          "path": "bundle.md",
+          "url": "https://github.com/michaeljabbour/amplifier-skill-taste/blob/40b90bd7bbf66f3e65f57fabb55773759984a4bf/bundle.md"
+        },
+        {
+          "path": "behaviors",
+          "url": "https://github.com/michaeljabbour/amplifier-skill-taste/tree/40b90bd7bbf66f3e65f57fabb55773759984a4bf/behaviors"
+        },
+        {
+          "path": "modes",
+          "url": "https://github.com/michaeljabbour/amplifier-skill-taste/tree/40b90bd7bbf66f3e65f57fabb55773759984a4bf/modes"
+        },
+        {
+          "path": "recipes",
+          "url": "https://github.com/michaeljabbour/amplifier-skill-taste/tree/40b90bd7bbf66f3e65f57fabb55773759984a4bf/recipes"
+        }
+      ]
+    },
+    {
+      "repo": "amplifier-skill-taste",
+      "paths": [
+        "site",
+        "scripts",
+        "docs"
+      ],
+      "destination": "amplifier-skill-taste:guide and evidence with separate install artifact",
+      "role": "reference/eval",
+      "action": "keep",
+      "why": "Keep source method, site explanation and dated results linked; media and reports are not runtime requirements.",
+      "interface": "Build-time source fidelity and versioned evidence references.",
+      "revision": "40b90bd7bbf66f3e65f57fabb55773759984a4bf",
+      "sources": [
+        "https://github.com/michaeljabbour/amplifier-skill-taste/tree/40b90bd7bbf66f3e65f57fabb55773759984a4bf/site",
+        "https://github.com/michaeljabbour/amplifier-skill-taste/tree/40b90bd7bbf66f3e65f57fabb55773759984a4bf/scripts",
+        "https://github.com/michaeljabbour/amplifier-skill-taste/tree/40b90bd7bbf66f3e65f57fabb55773759984a4bf/docs"
+      ],
+      "source_paths": [
+        {
+          "path": "site",
+          "url": "https://github.com/michaeljabbour/amplifier-skill-taste/tree/40b90bd7bbf66f3e65f57fabb55773759984a4bf/site"
+        },
+        {
+          "path": "scripts",
+          "url": "https://github.com/michaeljabbour/amplifier-skill-taste/tree/40b90bd7bbf66f3e65f57fabb55773759984a4bf/scripts"
+        },
+        {
+          "path": "docs",
+          "url": "https://github.com/michaeljabbour/amplifier-skill-taste/tree/40b90bd7bbf66f3e65f57fabb55773759984a4bf/docs"
+        }
+      ]
+    }
+  ],
+  "docs": [
+    "docs/INSTALL.md",
+    "docs/CONSOLIDATION.md"
+  ],
+  "publication_status": "Local consolidation candidate; existing published versions remain separate.",
+  "site_builder": "native"
+}
