@@ -1,5 +1,10 @@
 # Changelog
 
+## 2026-10-28 — Public first use
+
+- Add a complete public clone/install path beside the first useful outcome, with prerequisites, safe updates and a full-folder ZIP alternative. Preserve the existing method, films and interactive examples.
+
+
 ## Unreleased — improvement-round contract
 
 - Add the optional portable improvement-round/v1 record and contract pointer for a shared brief, immutable baseline, change hypothesis, gates, same-brief comparison, independent taste/elegance reasons, recorded human keep/undo and stopping budget.

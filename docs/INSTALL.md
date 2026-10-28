@@ -1,14 +1,27 @@
 # Install Taste × Elegance
 
-Authors and builders refining work while preserving intent.
+Bring a draft, design or artifact and what matters to you about it. Compare it with a worse move and a better one, then choose with the reasons visible.
 
-From this checkout:
+## From the public source
+
+Use Git and Python 3.11 or later. These commands install the complete method into a skills-parent directory:
 
 ```sh
-python3 scripts/capability.py install --dest /path/to/host/skills
+git clone https://github.com/michaeljabbour/amplifier-skill-taste.git
+cd amplifier-skill-taste
+python3 scripts/capability.py install --dest ~/.agents/skills
 ```
 
-Replace `/path/to/host/skills` with the host's skills parent directory. Keep the complete installed folder, references and license. The installer preserves conflicting local edits; `--replace` retains a dated backup.
+Choose the discovery directory supported by your agent. `~/.agents/skills` is an example. Start a new session if your host only discovers skills at startup, then ask for Taste × Elegance by name with one task. Read the returned result and its sources before acting on it.
 
+The installer refuses conflicting files. Keep your changes before deliberately replacing a copy. It does not register a host, start a service or prove model behavior.
 
-The new improvement-round contract is tested with Design Loop separately. A model score is not human adoption or permission to ship.
+## Without a checkout
+
+Download the complete ZIP from [the public site](https://michaeljabbour.github.io/amplifier-skill-taste/#use-skill), extract it and place the whole skill folder in your host’s skills directory. Keep all references, helpers and license files together. The single SKILL.md download is for reading; use the whole folder to install.
+
+## What to expect
+
+Bring a draft, design or artifact and what matters to you about it. Compare it with a worse move and a better one, then choose with the reasons visible.
+
+A universal beauty score. Taste and elegance stay separate, and your intent stays part of the brief.

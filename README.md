@@ -8,6 +8,18 @@ A lightweight skill that guides users and agents toward taste and elegance throu
 
 This project pairs the reusable [`improve-taste-and-elegance` skill](skills/improve-taste-and-elegance/SKILL.md) with an explanatory static website. The skill and [calibration reference](skills/improve-taste-and-elegance/references/calibration.md) began as the canonical revised source supplied for the existing [user-created skill](https://chatgpt.com/skills?skill_id=6ad24a616a5c8191932249aac4254289), including the user's clarification about facilitation, agency, and the choice between refinement and reframing. Version 0.2.0 adds Amplifier frontmatter and three clarifying sentences (delegation, where to save the decision note, and reference paths); the calibration reference is unchanged. The [2026-10-17 evaluation](docs/evaluations/benchmark-2026-10-17/REPORT.md) applies to its frozen snapshot. This project does not itself modify the installed skill.
 
+## First use
+
+Bring a draft, design or artifact and what matters to you about it. Compare it with a worse move and a better one, then choose with the reasons visible.
+
+```sh
+git clone https://github.com/michaeljabbour/amplifier-skill-taste.git
+cd amplifier-skill-taste
+python3 scripts/capability.py install --dest ~/.agents/skills
+```
+
+Requires Git and Python 3.11+. Use the skills directory supported by your agent. Ask for Taste × Elegance in a new session and supply one real task. The [install guide](docs/INSTALL.md) explains the complete ZIP alternative and safe updates.
+
 ## Use the skill
 
 Give an agent the skill and a concrete artifact or set of options. Include the audience, purpose, constraints, and what success would look like. Share what shaped your choices: an experience, an admired or disliked example and why, a tension, what feels wrong, or a distinct intent that must survive changes. The agent should reflect your reasoning for correction and derive provisional criteria with you. This is a compact conversation, not a large questionnaire; at most three missing-context questions are appropriate, only where answers would change the recommendation.

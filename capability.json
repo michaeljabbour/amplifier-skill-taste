@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "id": "taste-elegance",
-  "display_name": "Taste \u00d7 Elegance",
+  "display_name": "Taste × Elegance",
   "kind": "skill",
   "promise": "Make it more intentional and simpler while keeping it yours.",
   "audience": "Authors and builders refining work while preserving intent.",
@@ -126,6 +126,7 @@
     "docs/INSTALL.md",
     "docs/CONSOLIDATION.md"
   ],
-  "publication_status": "Local consolidation candidate; existing published versions remain separate.",
-  "site_builder": "native"
+  "publication_status": "Public source, site and documented installation path are available. Evidence scopes are recorded separately.",
+  "site_builder": "native",
+  "repository_url": "https://github.com/michaeljabbour/amplifier-skill-taste"
 }
