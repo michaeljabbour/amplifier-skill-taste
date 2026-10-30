@@ -2,7 +2,7 @@
 
 Actual reads:
 - `cat /tmp/taste-benchmark-2026-10-17/H02/task.txt`
-- `cat /Users/michaeljabbour/dev/amplifier-skill-taste/docs/evaluations/benchmark-2026-10-17/snapshot/SKILL.md`
+- `cat <benchmark-checkout>/docs/evaluations/benchmark-2026-10-17/snapshot/SKILL.md`
 
 Actual writes:
 - Wrote `/tmp/taste-benchmark-2026-10-17/H02/response.md` using a shell heredoc.

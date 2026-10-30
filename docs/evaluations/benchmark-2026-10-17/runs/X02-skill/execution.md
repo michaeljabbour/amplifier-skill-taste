@@ -2,7 +2,7 @@
 
 Read `/tmp/taste-benchmark-2026-10-17/X02-skill/task.txt` using `cat`: exit 0; task and user brief returned.
 
-Read `/Users/michaeljabbour/dev/amplifier-skill-taste/docs/evaluations/benchmark-2026-10-17/snapshot/SKILL.md` using `cat`: exit 0; skill instructions returned. No reference was needed for this bounded code decision.
+Read `<benchmark-checkout>/docs/evaluations/benchmark-2026-10-17/snapshot/SKILL.md` using `cat`: exit 0; skill instructions returned. No reference was needed for this bounded code decision.
 
 Listed task directory with `ls -la /tmp/taste-benchmark-2026-10-17/X02-skill`: exit 0; baseline.py, working.py, check_names.py, task.txt present.
 

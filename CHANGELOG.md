@@ -1,5 +1,9 @@
 # Changelog
 
+## 2026-10-30 — Public benchmark privacy
+
+- Replace only personal checkout prefixes in 35 historical benchmark task and execution records with an explicit public placeholder. Label the copies and publish original/public-copy hashes; preserve all responses, judgments, grading content and results. Original raw records remain in retained history and an owner-local backup. No new behavioral evaluation is claimed.
+
 ## 2026-10-28 — Public first use
 
 - Add a complete public clone/install path beside the first useful outcome, with prerequisites, safe updates and a full-folder ZIP alternative. Preserve the existing method, films and interactive examples.

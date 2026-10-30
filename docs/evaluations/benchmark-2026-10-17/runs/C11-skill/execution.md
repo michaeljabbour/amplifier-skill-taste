@@ -1,6 +1,6 @@
 Files read:
 - /tmp/taste-benchmark-2026-10-17/C11-skill/task.txt
-- /Users/michaeljabbour/dev/amplifier-skill-taste/docs/evaluations/benchmark-2026-10-17/snapshot/SKILL.md
+- <benchmark-checkout>/docs/evaluations/benchmark-2026-10-17/snapshot/SKILL.md
 
 Commands run:
 - cat on each of the two files above.
